@@ -32,8 +32,8 @@ api.interceptors.request.use(
 // 토큰 갱신 중인지 확인하는 플래그
 let isRefreshing = false;
 let failedQueue: Array<{
-  resolve: (value: any) => void;
-  reject: (reason: any) => void;
+  resolve: (value: string | null) => void;
+  reject: (reason: AxiosError) => void;
 }> = [];
 
 // 대기 중인 요청 처리
@@ -74,7 +74,7 @@ api.interceptors.response.use(
 
       return new Promise((resolve, reject) => {
         axios.post(`${API_BASE_URL}/reissue`, {}, { withCredentials: true })
-          .then(({ data, headers }) => {
+          .then(({ headers }) => {
             const accessToken = headers['access'];
             if (accessToken) {
               localStorage.setItem('accessToken', accessToken);
@@ -103,7 +103,8 @@ api.interceptors.response.use(
 
     // 에러 메시지 처리
     if (error.response) {
-      const message = error.response.data?.message || '요청 처리 중 오류가 발생했습니다.';
+      const responseData = error.response.data as { message?: string };
+      const message = responseData?.message || '요청 처리 중 오류가 발생했습니다.';
       return Promise.reject({ ...error, message });
     }
     
@@ -116,19 +117,19 @@ export default api;
 // API 헬퍼 함수들
 export const apiHelpers = {
   // GET 요청
-  get: async <T>(url: string, params?: any): Promise<T> => {
+  get: async <T>(url: string, params?: Record<string, unknown>): Promise<T> => {
     const response = await api.get(url, { params });
     return response.data;
   },
 
   // POST 요청
-  post: async <T>(url: string, data?: any): Promise<T> => {
+  post: async <T>(url: string, data?: Record<string, unknown>): Promise<T> => {
     const response = await api.post(url, data);
     return response.data;
   },
 
   // PUT 요청
-  put: async <T>(url: string, data?: any): Promise<T> => {
+  put: async <T>(url: string, data?: Record<string, unknown>): Promise<T> => {
     const response = await api.put(url, data);
     return response.data;
   },

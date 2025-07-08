@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store'; 
+import type { RootState } from '../store/store'; 
 import api from '../api/axios';
 
 

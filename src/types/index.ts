@@ -29,17 +29,19 @@ export interface User {
     id: number;
     title: string;
     owner: User;
-    userBooks: any[];
+    userBooks: User[];
     createdAt?: string;
     updatedAt?: string;
   }
   
   // 거래 관련 타입
-  export enum TransactionType {
-    INCOME = 'INCOME',
-    EXPENSE = 'EXPENSE',
-    TRANSFER = 'TRANSFER'
-  }
+  export const TransactionType = {
+    INCOME: 'INCOME',
+    EXPENSE: 'EXPENSE',
+    TRANSFER: 'TRANSFER'
+  } as const;
+  
+  export type TransactionType = typeof TransactionType[keyof typeof TransactionType];
   
   export interface Transaction {
     id: number;

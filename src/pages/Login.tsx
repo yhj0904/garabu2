@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import {Col, Row, Form, Button,Container } from "react-bootstrap";
-import OAuth2Login from "../components/OAuth2Login";
+import OAuth2Login from "../components/auth/OAuth2Login";
 import { useNavigate } from 'react-router-dom'
 
 function Login(){
@@ -10,28 +10,27 @@ function Login(){
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSaveChanges = async(e:any) =>{
+    const handleSaveChanges = async(e: React.FormEvent<HTMLFormElement>) =>{
       e.preventDefault();
 
-      axios.post('http://localhost:8080/login', {
-        username: name,
-        password: password
-      }).then((response) => {
-       // console.log(response.headers);
-        // 여기에서 응답 헤더에서 토큰을 추출하고 저장합니다.
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
+          username: name,
+          password: password
+        });
+        
         const accessToken = response.headers['access'];
-       if (accessToken) {
-        localStorage.setItem('accessToken', accessToken);
-        //console.log('Access token saved to localStorage');
-        navigate("/");
-        alert("로그인 완료");
-    
-        }else{
-          alert("토큰저장실패")
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken);
+          navigate("/");
+          alert("로그인 완료");
+        } else {
+          alert("토큰저장실패");
         }
-      }).catch((error) => {
-       // console.error('Login failed:', error);
-      });
+      } catch (error) {
+        console.error('Login failed:', error);
+        alert("로그인에 실패했습니다.");
+      }
     }
 
     return(

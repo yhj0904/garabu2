@@ -10,7 +10,7 @@ function LedgerBookName() {
     const navigate = useNavigate();
 
 
-    const handleSaveChanges = async(e:any) =>{
+    const handleSaveChanges = async(e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         api.post('/api/v2/book', {
             title : bookName,
@@ -53,7 +53,7 @@ function LedgerBookName() {
       </ToggleButtonGroup>
 
             <Container>
-      {' '}<Button variant="outline-info" onClick={handleSaveChanges}>시작하기</Button>{' '}
+      {' '}<Button variant="outline-info" onClick={(e) => handleSaveChanges(e as any)}>시작하기</Button>{' '}
       </Container>
       </div>
     )   

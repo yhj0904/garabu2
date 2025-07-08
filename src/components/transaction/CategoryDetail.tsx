@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { Container, Stack, Badge, Form, Button, Row, Col } from "react-bootstrap";
 
 interface Category {
@@ -7,24 +7,24 @@ interface Category {
     category: string;
 }
 
-function CategoryDetail(params: any) {
+function CategoryDetail() {
 
     const [categoryName, setCategoryName] = useState('');
     const [resData, setResData] = useState<Category[]>([]);
 
     useEffect(() => {
         api.get('/api/v2/category/list', {
-        }).then((e) => {
-            setResData(e.data.categories)
+        }).then((response) => {
+            setResData(response.data.categories)
         })
     }, [])
 
-    const categoryhandleSaveChanges = async (e: any) => {
+    const categoryhandleSaveChanges = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         api.post('/api/v2/category', {
             category: categoryName
-        }).then((e) => {
-           // alert(JSON.stringify(e.data))
+        }).then(() => {
+           // alert(JSON.stringify(response.data))
             setCategoryName(''); // 입력 필드 초기화
             alert('추가되었습니다.')
         })

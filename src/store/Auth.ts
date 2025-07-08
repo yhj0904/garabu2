@@ -1,8 +1,15 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+interface User {
+    id: string;
+    username: string;
+    email?: string;
+}
 
 // 초기 상태 정의
 const initialState = {
-    user: null
+    user: null as User | null
 };
 
 // createSlice를 사용하여 슬라이스 생성
@@ -11,7 +18,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         // 로그인 액션; PayloadAction을 사용하여 payload 타입 정의
-        loginSuccess(state, action: PayloadAction<any>) {
+        loginSuccess(state, action: PayloadAction<User>) {
             state.user = action.payload;
         },
         // 로그아웃 액션

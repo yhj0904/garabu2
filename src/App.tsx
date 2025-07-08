@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from './hooks/redux';
 import { Container, Spinner } from 'react-bootstrap';
 import Navbar from './components/layout/Navbar';
@@ -8,15 +8,15 @@ import ErrorBoundary from './components/common/ErrorBoundary';
 import './App.css';
 
 // Lazy loading으로 성능 최적화
-const Dashboard = lazy(() => import('./Routes/Dashboard'));
-const Login = lazy(() => import('./Routes/Login'));
-const Register = lazy(() => import('./Routes/Register'));
-const Insertdata = lazy(() => import('./Routes/Insertdata'));
-const TransactionDetail = lazy(() => import('./Routes/TransactionDetail'));
-const LedgerBookName = lazy(() => import('./Routes/LedgerBookName'));
-const Category = lazy(() => import('./Routes/Category'));
-const MyPage = lazy(() => import('./Routes/MyPage'));
-const OAuth = lazy(() => import('./components/OAuthAccessTokenProvider'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Insertdata = lazy(() => import('./pages/Insertdata'));
+const TransactionDetail = lazy(() => import('./pages/TransactionDetail'));
+const LedgerBookName = lazy(() => import('./pages/LedgerBookName'));
+const Category = lazy(() => import('./pages/Category'));
+const MyPage = lazy(() => import('./pages/MyPage'));
+const OAuth = lazy(() => import('./components/auth/OAuthAccessTokenProvider'));
 
 // 로딩 컴포넌트
 const LoadingFallback = () => (

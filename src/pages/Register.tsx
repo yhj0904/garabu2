@@ -10,20 +10,23 @@ function Register(){
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     
-    const handleSaveChanges = async(e:any) =>{
+    const handleSaveChanges = async(e: React.FormEvent<HTMLFormElement>) =>{
       e.preventDefault();
-      axios.post('http://localhost:8080/join',{
-        username: name,
-        email : email,
-        password : password
-      }).then((e)=>{
-        if(e.request.status === 200){
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/join`,{
+          username: name,
+          email : email,
+          password : password
+        });
+        
+        if(response.status === 200){
             navigate("/login");
             alert("회원 가입 되었습니다.");
         }
-      }).catch((error) =>{
-        alert(error);
-      })
+      } catch (error) {
+        console.error('Registration failed:', error);
+        alert("회원가입에 실패했습니다.");
+      }
     }
 
     return(

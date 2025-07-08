@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -18,7 +18,7 @@ const DateInput: React.FC<DateInputProps> = ( {selectedDate, setSelectedDate }) 
       maxDate={new Date('2099-12-31')} // maxDate 이후 날짜 선택 불가
       selected={selectedDate}
       closeOnScroll={true}
-      onChange={(date:Date) => setSelectedDate(date)}
+      onChange={(date: Date | null) => date && setSelectedDate(date)}
     />
   );
 };

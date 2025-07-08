@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import api from '../api/axios';
 
 interface Book {
@@ -8,7 +9,7 @@ interface Book {
     name:string;
     username: string;
   };
-  userBooks: any[]; 
+  userBooks: unknown[]; 
 }
 
 interface LoggedInUserInfoState {

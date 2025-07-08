@@ -1,14 +1,14 @@
-import React from 'react';
-import naverImg from '../img/btnG_아이콘원형.png'
+
+import naverImg from '../../img/btnG_아이콘원형.png'
 function OAuth2Login() {
   // 이미지 클릭 이벤트 핸들러
   const onNaverLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/naver"
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/naver`
     // 여기서 클릭 이벤트에 대한 다른 로직을 추가할 수 있습니다.
   };
 
   const onGoogleLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/google`;
     
   };
 

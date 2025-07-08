@@ -1,5 +1,5 @@
 import { Container,Form,Stack,Badge, Button,Row,Col } from "react-bootstrap";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { useEffect, useState } from "react";
 
 interface Payment {
@@ -7,24 +7,24 @@ interface Payment {
     payment : string;
 }
 
-function PaymentDetail(params:any) {
+function PaymentDetail() {
     
     const [paymentName, setPaymentName] = useState('');
     const [resDatas, setResDatas] = useState<Payment[]>([]);
 
     useEffect(() => {
         api.get('/api/v2/payment/list', {
-        }).then((e) => {
-            setResDatas(e.data.payments)
+        }).then((response) => {
+            setResDatas(response.data.payments)
         })
     }, [])
 
-    const handleSaveChanges = async (e: any) => {
+    const handleSaveChanges = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         api.post('/api/v2/payment', {
             payment: paymentName
-        }).then((e) => {
-        //   alert(JSON.stringify(e.data))
+        }).then(() => {
+        //   alert(JSON.stringify(response.data))
         setPaymentName(''); // 입력 필드 초기화
             alert('추가되었습니다.')
         })

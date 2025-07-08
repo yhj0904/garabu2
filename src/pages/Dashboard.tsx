@@ -1,7 +1,7 @@
 import { Container, Row, Col, Alert, Accordion,ListGroup } from "react-bootstrap";
 import CalendarPage from "./CalendarPage";
 import { useEffect, useState } from "react";
-import { AppDispatch, RootState } from "../store/store";
+import type { AppDispatch, RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMemberTransaction } from '../store/LoggedInUserInfo'
 

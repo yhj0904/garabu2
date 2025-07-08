@@ -7,7 +7,7 @@ import {
     StyledDot,
   } from "../style/style";
   import moment from "moment";
-import { Content } from "react-bootstrap/lib/Tab";
+
   
   type ValuePiece = Date | null;
   type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -20,16 +20,16 @@ import { Content } from "react-bootstrap/lib/Tab";
     );
     const attendDay = ["2023-12-03", "2023-12-13"]; // 출석한 날짜 예시
   
-    const dayToAmount = [
-        //일에 표시될햣 총 지출, 수입 데이터
-    ]
+    // const dayToAmount = [
+    //     //일에 표시될 총 지출, 수입 데이터
+    // ]
 
-    const addContent =({amount}:any)=>{
-        const content =[];
+    // const addContent =({amount}: unknown)=>{
+    //     const content =[];
 
-        //각 타일에 컨텐츠 추가.
+    //     //각 타일에 컨텐츠 추가.
 
-    }
+    // }
 
     const handleDateChange = (newDate: Value) => {
       setDate(newDate);
@@ -46,9 +46,9 @@ import { Content } from "react-bootstrap/lib/Tab";
           <StyledCalendar
             value={date}
             onChange={handleDateChange}
-            formatDay={(locale, date) => moment(date).format("D")}
-            formatYear={(locale, date) => moment(date).format("YYYY")}
-            formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
+            formatDay={(_locale, date) => moment(date).format("D")}
+            formatYear={(_locale, date) => moment(date).format("YYYY")}
+            formatMonthYear={(_locale, date) => moment(date).format("YYYY. MM")}
             calendarType="gregory"
             showNeighboringMonth={false}
             next2Label={null}
@@ -63,7 +63,7 @@ import { Content } from "react-bootstrap/lib/Tab";
             }
             // 오늘 날짜에 '오늘' 텍스트 삽입하고 출석한 날짜에 점 표시를 위한 설정
             tileContent={({ date, view }) => {
-              let html = [];
+              const html = [];
               if (
                 view === "month" &&
                 date.getMonth() === today.getMonth() &&

@@ -1,6 +1,6 @@
 import { Row, Col, Card, Spinner } from 'react-bootstrap';
-import type { Transaction } from '../types';
-import { TransactionType } from '../types';
+import type { Transaction } from '../../types';
+import { TransactionType } from '../../types';
 import styled from 'styled-components';
 
 interface TransactionSummaryProps {

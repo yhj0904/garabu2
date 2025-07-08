@@ -1,6 +1,6 @@
 import { Tabs, Tab } from "react-bootstrap";
-import CategoryDetail from "../components/CategoryDetail";
-import PaymentDetail from "../components/PaymentDetail";
+import CategoryDetail from "../components/transaction/CategoryDetail";
+import PaymentDetail from "../components/transaction/PaymentDetail";
 
 function Category() {
   return (
