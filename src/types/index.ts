@@ -68,6 +68,7 @@ export interface User {
     memo?: string;
     amountType: TransactionType;
     bookName: string;
+    bookId?: number; // 가계부 ID 추가
   }
   
   // 카테고리 & 결제수단 타입

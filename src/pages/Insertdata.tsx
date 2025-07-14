@@ -20,6 +20,11 @@ function Insertdata() {
   const selectedBookName = bookNames[0] || '';
   const currentUser = { username };
   
+  // bookId를 가져오기 위해 books 상태도 확인
+  const books = useAppSelector(state => state.LoggedInMember.books || []);
+  const selectedBook = books.find(book => book.title === selectedBookName);
+  const selectedBookId = selectedBook?.id || 10; // 기본값으로 10 사용 (로그에서 확인된 값)
+  
   const [formData, setFormData] = useState<TransactionFormData>({
     date: new Date().toISOString().slice(0, 10),
     amount: 0,
@@ -30,6 +35,7 @@ function Insertdata() {
     memo: '',
     amountType: TransactionType.EXPENSE,
     bookName: selectedBookName,
+    bookId: selectedBookId,
   });
   
   const [validated, setValidated] = useState(false);
@@ -37,19 +43,22 @@ function Insertdata() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    // 카테고리와 결제수단 목록 로드
-    dispatch(fetchCategories());
-    dispatch(fetchPayments());
-  }, [dispatch]);
+    // 카테고리와 결제수단 목록 로드 (bookId 필요)
+    if (selectedBookId) {
+      dispatch(fetchCategories(selectedBookId));
+      dispatch(fetchPayments(selectedBookId));
+    }
+  }, [dispatch, selectedBookId]);
 
   useEffect(() => {
     // 선택된 가계부나 사용자 정보 업데이트
     setFormData(prev => ({
       ...prev,
       bookName: selectedBookName,
+      bookId: selectedBookId,
       spender: currentUser?.username || prev.spender,
     }));
-  }, [selectedBookName, currentUser]);
+  }, [selectedBookName, selectedBookId, currentUser]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

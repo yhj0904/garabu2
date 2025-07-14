@@ -26,21 +26,21 @@ const initialState: TransactionState = {
   error: null,
 };
 
-// 카테고리 목록 가져오기
+// 가계부별 카테고리 목록 가져오기
 export const fetchCategories = createAsyncThunk(
   'transaction/fetchCategories',
-  async () => {
-    const response = await api.get('/categories');
-    return response.data;
+  async (bookId: number) => {
+    const response = await api.get(`/api/v2/category/book/${bookId}`);
+    return response.data.categories;
   }
 );
 
-// 결제수단 목록 가져오기
+// 가계부별 결제수단 목록 가져오기
 export const fetchPayments = createAsyncThunk(
   'transaction/fetchPayments',
-  async () => {
-    const response = await api.get('/payments');
-    return response.data;
+  async (bookId: number) => {
+    const response = await api.get(`/api/v2/payment/book/${bookId}`);
+    return response.data.payments;
   }
 );
 
@@ -48,7 +48,20 @@ export const fetchPayments = createAsyncThunk(
 export const createTransaction = createAsyncThunk(
   'transaction/createTransaction',
   async (formData: TransactionFormData) => {
-    const response = await api.post('/transactions', formData);
+    // bookId를 추출하여 올바른 형식으로 변환
+    const requestData = {
+      date: formData.date,
+      amount: formData.amount,
+      description: formData.description,
+      memo: formData.memo,
+      amountType: formData.amountType,
+      bookId: formData.bookId, // bookId 추가
+      payment: formData.payment,
+      category: formData.category,
+      spender: formData.spender
+    };
+    
+    const response = await api.post('/api/v2/ledger/ledgers', requestData);
     return response.data;
   }
 );

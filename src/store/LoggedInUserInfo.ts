@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import api from '../api/axios';
 
 interface Book {
+  id: number; // ID 필드 추가
   title: string;
   owner: {
     email: string;
@@ -16,6 +17,7 @@ interface LoggedInUserInfoState {
   username: string;
   email: string;
   bookNames: string[];
+  books: Book[]; // 전체 Book 객체 배열 추가
   loading: boolean;
   error: string | null;
 }
@@ -24,6 +26,7 @@ const initialState: LoggedInUserInfoState = {
   username: '',
   email: '',
   bookNames: [],
+  books: [], // books 배열 초기화
   loading: false,
   error: null,
 };
@@ -55,6 +58,7 @@ const memberTransactionSlice = createSlice({
         state.username = action.payload[0].owner.username;
         state.email = action.payload[0].owner.email;
         state.bookNames = action.payload.map(book => book.title);
+        state.books = action.payload; // 전체 Book 객체 저장
         state.loading = false;
       })
       .addCase(fetchMemberTransaction.rejected, (state, action) => {
